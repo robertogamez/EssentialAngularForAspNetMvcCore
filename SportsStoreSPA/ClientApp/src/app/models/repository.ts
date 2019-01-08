@@ -1,11 +1,18 @@
 import { Product } from './product.model';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class Repository {
 
   product: Product;
 
-  constructor() {
-    this.product = new Product(2, "Coca-cola", "Refrescos", "", 20.50, null, null);
+  constructor(private http: HttpClient) {
+    this.getProduct(1);
+  }
+
+  getProduct(id: number) {
+    this.http.get('/api/products/' + id).subscribe(response => this.product = response);
   }
 
 }
