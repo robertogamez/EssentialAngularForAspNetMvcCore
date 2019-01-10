@@ -6,13 +6,18 @@ import { Injectable } from '@angular/core';
 export class Repository {
 
   product: Product;
+  products: Product[];
 
   constructor(private http: HttpClient) {
-    this.getProduct(1);
+    this.getProducts(true);
   }
 
   getProduct(id: number) {
     this.http.get('/api/products/' + id).subscribe(response => this.product = response);
+  }
+
+  getProducts(related = false) {
+    this.http.get('/api/products?related=' + related).subscribe(response => this.products = <Product[]>response);
   }
 
 }

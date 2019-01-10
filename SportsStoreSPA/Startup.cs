@@ -26,6 +26,7 @@ namespace SportsStoreSPA
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(opts =>
             {
                 opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+                opts.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
 
             // In production, the Angular files will be served from this directory
