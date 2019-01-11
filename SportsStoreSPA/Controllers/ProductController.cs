@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SportsStoreSPA.Dtos;
 using SportsStoreSPA.Models;
 
 namespace SportsStoreSPA.Controllers
@@ -26,9 +27,9 @@ namespace SportsStoreSPA.Controllers
                                 .Include(p => p.Ratings)
                                 .First(p => p.ProductId == id);
 
-            if(result != null)
+            if (result != null)
             {
-                if(result.Supplier != null)
+                if (result.Supplier != null)
                 {
                     result.Supplier.Products = result.Supplier.Products.Select(p =>
                     {
@@ -56,16 +57,18 @@ namespace SportsStoreSPA.Controllers
             return result;
         }
 
-        [HttpGet]
-        public IEnumerable<Product> GetProducts(bool related = false)
+        [HttpPost]
+        public DataTablesResponse<List<Product>> GetProducts([FromBody]DataTablesOptions options, bool related = false)
         {
             IQueryable<Product> query = context.Products;
+            List<Product> products;
 
             if (related)
             {
                 query = query.Include(p => p.Supplier).Include(p => p.Ratings);
-                List<Product> data = query.ToList();
-                data.ForEach(p =>
+                products = query.ToList();
+
+                products.ForEach(p =>
                 {
                     if (p.Supplier != null)
                     {
@@ -77,12 +80,19 @@ namespace SportsStoreSPA.Controllers
                         p.Ratings.ForEach(r => r.Product = null);
                     }
                 });
-
-                return data;
-            } else
-            {
-                return query;
             }
+            else
+            {
+                products = query.ToList();
+            }
+
+
+            return new DataTablesResponse<List<Product>>
+            {
+                data = products.Skip(options.Start).Take(options.Length).ToList(),
+                recordsTotal = products.Count,
+                recordsFiltered = products.Count
+            };
         }
 
     }

@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 
 import { ModelModule } from './models/model.module';
 
+import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,7 +17,8 @@ import { ModelModule } from './models/model.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ModelModule
+    ModelModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
