@@ -1,2 +1,1 @@
-﻿1. Angular Datatables
-2. Servicios en Angular
+﻿1. Servicios en Angular
