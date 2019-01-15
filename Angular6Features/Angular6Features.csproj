@@ -6,12 +6,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="example\src\app\datasource.model.ts" />
+    <None Remove="example\src\app\product.model.ts" />
+    <None Remove="example\src\app\repository.model.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="example\src\app\datasource.model.ts" />
+    <TypeScriptCompile Include="example\src\app\product.model.ts" />
+    <TypeScriptCompile Include="example\src\app\repository.model.ts" />
   </ItemGroup>
 
 </Project>
