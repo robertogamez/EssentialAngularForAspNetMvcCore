@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="example\src\app\component.ts" />
     <None Remove="example\src\app\datasource.model.ts" />
     <None Remove="example\src\app\product.model.ts" />
     <None Remove="example\src\app\repository.model.ts" />
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="example\src\app\component.ts" />
     <TypeScriptCompile Include="example\src\app\datasource.model.ts" />
     <TypeScriptCompile Include="example\src\app\product.model.ts" />
     <TypeScriptCompile Include="example\src\app\repository.model.ts" />

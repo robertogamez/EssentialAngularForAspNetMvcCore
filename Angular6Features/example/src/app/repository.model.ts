@@ -1,5 +1,6 @@
 import { Product } from "./product.model";
 import { SimpleDataSource } from "./datasource.model";
+
 export class Model {
   private dataSource: SimpleDataSource;
   private products: Product[];
