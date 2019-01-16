@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportsStoreSPA.Dtos;
 using SportsStoreSPA.Models;
+using SportsStoreSPA.Models.BindingTargets;
 
 namespace SportsStoreSPA.Controllers
 {
@@ -63,6 +64,13 @@ namespace SportsStoreSPA.Controllers
             IQueryable<Product> query = context.Products;
             List<Product> products;
 
+            if (!string.IsNullOrWhiteSpace(options.search.value))
+            {
+                string searchLower = options.search.value.ToLower();
+                query = query.Where(p => p.Name.ToLower().Contains(searchLower)
+                            || p.Description.ToLower().Contains(searchLower));
+            }
+
             if (related)
             {
                 query = query.Include(p => p.Supplier).Include(p => p.Ratings);
@@ -93,6 +101,23 @@ namespace SportsStoreSPA.Controllers
                 recordsTotal = products.Count,
                 recordsFiltered = products.Count
             };
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct([FromBody]ProductData pdata)
+        {
+            if (ModelState.IsValid)
+            {
+                Product p = pdata.Product;
+
+                context.Add(p);
+                context.SaveChanges();
+
+                return Ok(p.ProductId);
+            } else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
     }
